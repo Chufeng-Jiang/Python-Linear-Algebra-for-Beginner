@@ -1,5 +1,5 @@
 import math
-from ._globals import EPSILON
+from ._globals import is_zero
 class Vector:
 
     def __init__(self, lst):
@@ -9,6 +9,10 @@ class Vector:
         lst是个引用，list(lst)将值复制一遍，防止用户修改值
         """
         self._values = list(lst)
+
+    def underlying_list(self):
+        """返回向量的底层列表"""
+        return self._values[:]
 
     def dot(self, another):
         """向量点乘，返回结果标量"""
@@ -26,7 +30,7 @@ class Vector:
         返回向量的单位向量
         此处设计到了除法: def __truediv__(self, k):
         """
-        if self.norm() < EPSILON:
+        if is_zero(self.norm()):
             raise ZeroDivisionError("Normalize error! norm is zero.")
         return Vector(self._values) / self.norm()
         # return 1 / self.norm() * Vector(self._values)
